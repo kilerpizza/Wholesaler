@@ -64,14 +64,6 @@ public class Warehouse {
 		}
 	}
 
-	public String getString() {
-		@SuppressWarnings("resource")
-		Scanner userInput = new Scanner(System.in);
-		String choice = userInput.next();
-		return choice;
-
-	}
-
 	public Integer getInteger() {
 		@SuppressWarnings("resource")
 		Scanner userInput = new Scanner(System.in);
@@ -80,28 +72,29 @@ public class Warehouse {
 
 	}
 
-	public void buyPackets(Account balance, int day) {
-		System.out.println("What would You like to buy?");
-		String choice = getString();
-		System.out.println("How much You'd like to buy?");
-		System.out.println("Price is "
-				+ ItemTypes.chooseItemTypes(choice).getBuyingPrice()
-				+ " GBP per unit.");
-		Integer quantity = getInteger();
-		if (quantity * ItemTypes.chooseItemTypes(choice).getBuyingPrice() <= balance
-				.getAccount()) {
-			addItem(ItemTypes.chooseItemTypes(choice), quantity, day);
-			balance.removeBalance(quantity
-					* ItemTypes.chooseItemTypes(choice).getBuyingPrice());
-			System.out
-					.println("You've bought " + quantity + " " + choice + ".");
-
-		} else {
-			System.out.println("You don't have enough money.");
-			delayScreen();
-		}
-
-	}
+	 public void buyPackets(Account balance, int day) {
+	 System.out.println("What would You like to buy?");
+	 String choice = getString();
+	 System.out.println("How much You'd like to buy?");
+	 System.out.println("Price is "
+	 + ItemTypes.chooseItemTypes(choice).getBuyingPrice()
+	 + " GBP per unit.");
+	 Integer quantity = getInteger();
+	 if (quantity * ItemTypes.chooseItemTypes(choice).getBuyingPrice() <=
+	 balance
+	 .getAccount()) {
+	 addItem(ItemTypes.chooseItemTypes(choice), quantity, day);
+	 balance.removeBalance(quantity
+	 * ItemTypes.chooseItemTypes(choice).getBuyingPrice());
+	 System.out
+	 .println("You've bought " + quantity + " " + choice + ".");
+	
+	 } else {
+	 System.out.println("You don't have enough money.");
+	 
+	 }
+	
+	 }
 
 	private void amendOrderQuantity(Packet packet, Customer dailyOrder) {
 		Integer amendedOrderQuantity = dailyOrder.getPurchaseQuantity()
@@ -112,16 +105,6 @@ public class Warehouse {
 	public void amendPacketQuantity(Packet packet, Integer orderQuantity) {
 		Integer amendedPacketQuantity = packet.getQuantity() - orderQuantity;
 		packet.setQuantity(amendedPacketQuantity);
-	}
-
-	public void renderList(List<Packet> anyList) {
-		for (Packet packet : anyList) {
-			System.out
-					.println((packet.getItemType() + ": " + packet
-							.getQuantity())
-							+ ". purchased on: "
-							+ packet.getPurchase());
-		}
 	}
 
 	public void renderStockContentByItemType() {
@@ -168,15 +151,6 @@ public class Warehouse {
 			}
 		}
 		return result;
-
-	}
-
-	private void delayScreen() {
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
 
 	}
 
