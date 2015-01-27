@@ -1,7 +1,5 @@
 package wholesaler.database;
 
-import java.util.List;
-
 public class Wholesaler {
 	private int day = 1;
 	private Warehouse warehouse;
@@ -15,11 +13,6 @@ public class Wholesaler {
 		warehouse = new Warehouse();
 		balance = new Account(1000);
 		viewer = new Viewer();
-		warehouse.addItem(ItemTypes.APPLE, 10, day);
-		warehouse.addItem(ItemTypes.POTATO, 10, day);
-		warehouse.addItem(ItemTypes.ONION, 10, day);
-		warehouse.addItem(ItemTypes.LEEK, 10, day);
-		warehouse.addItem(ItemTypes.ORANGE, 10, day);
 		while (endOfGame() == false) {
 			game();
 		}
@@ -33,33 +26,64 @@ public class Wholesaler {
 		viewer.displayExpiredPackets(warehouse.removeExpiredPackets(day));
 		viewer.displayMenu();
 		String choice = viewer.getString();
-		if(choice  == "s"){
+		switch (choice) {
+		case "s":
 			viewer.displayStockContent(warehouse.getStock());
-		}
-		else if(choice == "b"){
-			warehouse.buyPackets(balance, day);
-		}
-		dailyMarket = new Market();
+			viewer.delayScreen();
+			break;
+		case "b":
+			viewer.displayBuyWhat();
+			String buyWhat = viewer.getString();
+			viewer.displayPrice(buyWhat);
+			viewer.displayBuyHowMuch();
+			Integer quantity = viewer.getInteger();
+			if (quantity * ItemTypes.chooseItemTypes(buyWhat).getBuyingPrice() <= balance
+					.getAccount()) {
+				warehouse.buyPackets(balance, day, buyWhat, quantity);
+				viewer.displayBuyCommited(quantity, buyWhat);
+				viewer.delayScreen();
+			} else {
+				viewer.displayNotEnoughFunds();
+				viewer.delayScreen();
+			}
 
-		// System.out.println("Hi. I'd like to buy:");
-		// dailyMarket.renderNewOrder();
-		// for (Customer order : dailyMarket.getDailyOrderList()) {
-		// warehouse.sellItems(order, balance);
-		// }
-		// }
-		//
-		// } else if (option.equals("e")) {
-		// alreadyTraded = false;
-		// endTurn();
-		// } else {
-		// game();
-		// }
+			break;
+		case "i":
+			viewer.displayAvailableItemList();
+			break;
+		case "o":
+			if (alreadyTraded == false) {
+				dailyMarket = new Market();
+				viewer.displayMarketMessage();
+				viewer.renderNewOrder(dailyMarket.getDailyOrderList());
+				for (Customer order : dailyMarket.getDailyOrderList()) {
+					warehouse.sellItems(order, balance);
+					alreadyTraded = true;
+				}
+
+			} else {
+				viewer.displayAlreadyTraded();
+				viewer.delayScreen();
+			}
+			break;
+		case "e":
+			alreadyTraded = false;
+			endTurn();
+		default:
+
+			break;
+
+		}
+
 	}
 
 	public void endTurn() {
 		day++;
-		warehouse.happyCustomerCounter = warehouse.happyCustomerCounter - 1;
-		
+		warehouse.happyCustomerCounter = warehouse.happyCustomerCounter - 5;
+		if (warehouse.happyCustomerCounter < 0){
+			warehouse.happyCustomerCounter = 0;
+		}
+
 	}
 
 	public boolean endOfGame() {

@@ -49,16 +49,16 @@ public class Viewer {
 
 	}
 
-	private void delayScreen() {
+	public void delayScreen() {
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(2500);
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 
 	}
 
-	public void listOfItemTypes() {
+	public void displayAvailableItemList() {
 		System.out
 				.println("Item Type:     expiry:    purchase price:   selling price:");
 		System.out.println("bananas        3          25                60");
@@ -82,23 +82,53 @@ public class Viewer {
 		System.out.println("(i) See available items list.");
 		System.out.println("(o) Open warehouse for day's business.");
 		System.out.println("(e) End turn.");
-		
-			// } else if (option.equals("b")) {
-			// 
-			//
-			// delayScreen();
-			// game();
-			// }
-			// else if (option.equals("i")) {
-			// listOfItemTypes();
-			// delayScreen();
-			// } else if (option.equals("o")) {
-			// if (alreadyTraded) {
-			// System.out.println("You've already traded today.");
-			// delayScreen();
-			// game();
-			// } else {
-			// alreadyTraded();}
 
+	}
+
+	public void displayBuyWhat() {
+		System.out.println("What would You like to buy?");
+	}
+
+	public void displayAlreadyTraded() {
+		System.out.println("You've already traded today.");
+	}
+
+	public void displayBuyHowMuch() {
+		System.out.println("How much You'd like to buy?");
+	}
+
+	public void displayBuyCommited(Integer quantity, String choice) {
+		System.out.println("You've bought " + quantity + " " + choice + ".");
+
+	}
+
+	public void displayNotEnoughFunds() {
+		System.out.println("You don't have enough money.");
+	}
+
+	public void displayPrice(String buyWhat) {
+		System.out.println("Price is "
+				+ ItemTypes.chooseItemTypes(buyWhat).getBuyingPrice()
+				+ " GBP per unit.");
+	}
+
+	public Integer getInteger() {
+		@SuppressWarnings("resource")
+		Scanner userInput = new Scanner(System.in);
+		Integer quantity = userInput.nextInt();
+		return quantity;
+
+	}
+
+	public void displayMarketMessage() {
+		System.out.println("Hi. I'd like to buy:");
+
+	}
+
+	public void renderNewOrder(List<Customer> dailyOrderList) {
+		for (Customer order : dailyOrderList) {
+			System.out.println(order.getProductType() + ": "
+					+ order.getPurchaseQuantity());
 		}
 	}
+}

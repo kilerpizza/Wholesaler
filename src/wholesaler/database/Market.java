@@ -12,7 +12,8 @@ public class Market {
 	public Market() {
 		Warehouse warehouse = new Warehouse();
 		dailyOrderList = new ArrayList<Customer>();
-		for (int i = 0; i <= (RandomGenerator.getRandomNumber(6 + warehouse.happyCustomerCounter)); i++) {
+		for (int i = 0; i <= (RandomGenerator
+				.getRandomNumber(6 + warehouse.happyCustomerCounter)); i++) {
 			Customer order = new Customer();
 			this.order = order;
 			dailyOrderList.add(order);
@@ -23,13 +24,6 @@ public class Market {
 
 	public Customer getOrderFromDailyOrderList() {
 		return order;
-	}
-
-	public void renderNewOrder() {
-		for (Customer order : getDailyOrderList()) {
-			System.out.println(order.getProductType() + ": "
-					+ order.getPurchaseQuantity());
-		}
 	}
 
 	public List<Customer> getDailyOrderList() {

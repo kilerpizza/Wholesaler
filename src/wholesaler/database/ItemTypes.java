@@ -47,7 +47,7 @@ public class ItemTypes {
 			ItemType itemType = POTATO;
 			return itemType;
 		} else {
-			System.out.println("We dont sell it.");
+			
 
 			return null;
 
