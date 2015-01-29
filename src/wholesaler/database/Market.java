@@ -13,7 +13,7 @@ public class Market {
 		Warehouse warehouse = new Warehouse();
 		dailyOrderList = new ArrayList<Customer>();
 		for (int i = 0; i <= (RandomGenerator
-				.getRandomNumber(6 + warehouse.happyCustomerCounter)); i++) {
+				.getRandomNumber(5 + warehouse.happyCustomerCounter)); i++) {
 			Customer order = new Customer();
 			this.order = order;
 			dailyOrderList.add(order);

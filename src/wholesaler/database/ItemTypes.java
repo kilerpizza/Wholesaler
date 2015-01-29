@@ -16,34 +16,34 @@ public class ItemTypes {
 
 	public static final ItemType chooseItemTypes(String choice) {
 
-		if (choice.equals("bananas")) {
+		if (choice.equals("1")) {
 			ItemType itemType = BANANA;
 			return itemType;
-		} else if (choice.equals("tomatoes")) {
+		} else if (choice.equals("2")) {
 			ItemType itemType = TOMATO;
 			return itemType;
-		} else if (choice.equals("oranges")) {
+		} else if (choice.equals("3")) {
 			ItemType itemType = ORANGE;
 			return itemType;
-		} else if (choice.equals("cucumbers")) {
+		} else if (choice.equals("4")) {
 			ItemType itemType = CUCUMBER;
 			return itemType;
-		} else if (choice.equals("pears")) {
+		} else if (choice.equals("5")) {
 			ItemType itemType = PEAR;
 			return itemType;
-		} else if (choice.equals("leeks")) {
+		} else if (choice.equals("6")) {
 			ItemType itemType = LEEK;
 			return itemType;
-		} else if (choice.equals("onions")) {
+		} else if (choice.equals("7")) {
 			ItemType itemType = ONION;
 			return itemType;
-		} else if (choice.equals("cabbages")) {
+		} else if (choice.equals("8")) {
 			ItemType itemType = CABBAGE;
 			return itemType;
-		} else if (choice.equals("apples")) {
+		} else if (choice.equals("9")) {
 			ItemType itemType = APPLE;
 			return itemType;
-		} else if (choice.equals("potatoes")) {
+		} else if (choice.equals("0")) {
 			ItemType itemType = POTATO;
 			return itemType;
 		} else {

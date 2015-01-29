@@ -1,5 +1,8 @@
 package wholesaler.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Wholesaler {
 	private int day = 1;
 	private Warehouse warehouse;
@@ -29,7 +32,7 @@ public class Wholesaler {
 		switch (choice) {
 		case "s":
 			viewer.displayStockContent(warehouse.getStock());
-			viewer.delayScreen();
+			viewer.pauseProg();
 			break;
 		case "b":
 			viewer.displayBuyWhat();
@@ -41,15 +44,16 @@ public class Wholesaler {
 					.getAccount()) {
 				warehouse.buyPackets(balance, day, buyWhat, quantity);
 				viewer.displayBuyCommited(quantity, buyWhat);
-				viewer.delayScreen();
+				viewer.pauseProg();
 			} else {
 				viewer.displayNotEnoughFunds();
-				viewer.delayScreen();
+				viewer.pauseProg();
 			}
 
 			break;
 		case "i":
 			viewer.displayAvailableItemList();
+			viewer.pauseProg();
 			break;
 		case "o":
 			if (alreadyTraded == false) {
@@ -57,13 +61,44 @@ public class Wholesaler {
 				viewer.displayMarketMessage();
 				viewer.renderNewOrder(dailyMarket.getDailyOrderList());
 				for (Customer order : dailyMarket.getDailyOrderList()) {
-					warehouse.sellItems(order, balance);
+					List<Packet> packetsToSell = new ArrayList<Packet>();
+					packetsToSell.addAll(warehouse.getStock());
+					for (Packet packet : packetsToSell) {
+						if (packet.getItemType() == order.getProductType()) {
+							viewer.displayWeHaveIt(packet);
+							warehouse.happyCustomerCounter++;
+
+							if (packet.getQuantity() > order
+									.getPurchaseQuantity()) {
+								balance.addValue(packet, order);
+								warehouse.amendPacketQuantity(packet,
+										order.getPurchaseQuantity());
+								viewer.displaySold(packet, order);
+
+							} else if (packet.getQuantity() < order
+									.getPurchaseQuantity()) {
+								balance.addValue(packet, order);
+								warehouse.amendOrderQuantity(packet, order);
+								warehouse.getStock().remove(packet);
+								viewer.displaySold(packet, order);
+							} else {
+
+								balance.addValue(packet, order);
+								warehouse.getStock().remove(packet);
+								viewer.displaySold(packet, order);
+
+							}
+						}
+
+					}
+					viewer.pauseProg();
+
 					alreadyTraded = true;
 				}
 
 			} else {
 				viewer.displayAlreadyTraded();
-				viewer.delayScreen();
+				viewer.pauseProg();
 			}
 			break;
 		case "e":
@@ -79,8 +114,8 @@ public class Wholesaler {
 
 	public void endTurn() {
 		day++;
-		warehouse.happyCustomerCounter = warehouse.happyCustomerCounter - 5;
-		if (warehouse.happyCustomerCounter < 0){
+		warehouse.happyCustomerCounter = warehouse.happyCustomerCounter - 2;
+		if (warehouse.happyCustomerCounter < 0) {
 			warehouse.happyCustomerCounter = 0;
 		}
 

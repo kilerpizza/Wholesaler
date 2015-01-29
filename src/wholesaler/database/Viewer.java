@@ -11,6 +11,14 @@ public class Viewer {
 		System.out.println("HCC: " + hcc);
 	}
 
+	public void pauseProg() {
+		System.out.println("Press enter to continue...");
+		@SuppressWarnings("resource")
+		Scanner keyboard = new Scanner(System.in);
+		keyboard.nextLine();
+
+	}
+
 	public void displayList(List<Packet> list) {
 		for (Packet packet : list) {
 			System.out
@@ -49,15 +57,6 @@ public class Viewer {
 
 	}
 
-	public void delayScreen() {
-		try {
-			Thread.sleep(2500);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
-
-	}
-
 	public void displayAvailableItemList() {
 		System.out
 				.println("Item Type:     expiry:    purchase price:   selling price:");
@@ -86,7 +85,22 @@ public class Viewer {
 	}
 
 	public void displayBuyWhat() {
-		System.out.println("What would You like to buy?");
+		System.out
+				.println("What would You like to buy? Press appropriate key:");
+
+		System.out
+				.println("Item Type:     expiry:    purchase price:   selling price:");
+		System.out.println("1: bananas        3          25                60");
+		System.out.println("2: tomatoes       5          23                50");
+		System.out.println("3: oranges        6          18                36");
+		System.out.println("4: cucumbers      7          10                19");
+		System.out.println("5: pears          8          16                31");
+		System.out.println("6: leeks          9          14                25");
+		System.out.println("7: onions        11          12                18");
+		System.out.println("8: cabbages      12          10                15");
+		System.out.println("9: apples        13           8                11");
+		System.out.println("0: potatoes      15           6                 8");
+
 	}
 
 	public void displayAlreadyTraded() {
@@ -125,10 +139,28 @@ public class Viewer {
 
 	}
 
+	public void displayWeHaveIt(Packet packet) {
+		System.out.println("We have " + packet.getPacketName() + ".");
+	}
+
+	public void displaySold(Packet packet, Customer order) {
+		Integer quantity = 0;
+		if (packet.getQuantity() >= order.getPurchaseQuantity()) {
+			quantity = order.getPurchaseQuantity();
+		} else {
+			quantity = packet.getQuantity();
+
+		}
+		System.out.println("You've just sold " + quantity + " "
+				+ packet.getPacketName() + " for "
+				+ packet.getItemType().getSellingPrice() * quantity + " GBP.");
+	}
+
 	public void renderNewOrder(List<Customer> dailyOrderList) {
 		for (Customer order : dailyOrderList) {
 			System.out.println(order.getProductType() + ": "
 					+ order.getPurchaseQuantity());
 		}
 	}
+
 }

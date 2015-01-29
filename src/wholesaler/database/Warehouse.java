@@ -2,11 +2,10 @@ package wholesaler.database;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Warehouse {
 	private List<Packet> stock;
-	public Integer happyCustomerCounter = 20;
+	public Integer happyCustomerCounter = 5;
 
 	public Warehouse() {
 		@SuppressWarnings("unused")
@@ -19,49 +18,6 @@ public class Warehouse {
 		return stock;
 	}
 
-	public void sellItems(Customer order, Account balance) {
-
-		List<Packet> packetsToSell = new ArrayList<Packet>();
-		packetsToSell.addAll(getStock());
-		for (Packet packet : packetsToSell) {
-			if (packet.getItemType() == order.getProductType()) {
-				System.out.println("We have " + packet.getPacketName() + ".");
-				happyCustomerCounter++;
-
-				if (packet.getQuantity() > order.getPurchaseQuantity()) {
-					balance.addValue(packet, order);
-					amendPacketQuantity(packet, order.getPurchaseQuantity());
-					System.out.println("You've just sold "
-							+ order.getPurchaseQuantity() + " "
-							+ packet.getPacketName() + " for "
-							+ packet.getItemType().getSellingPrice()
-							* order.getPurchaseQuantity() + " GBP.");
-
-				} else if (packet.getQuantity() < order.getPurchaseQuantity()) {
-					System.out.println("You've just sold "
-							+ packet.getQuantity() + " "
-							+ packet.getPacketName() + " for "
-							+ packet.getQuantity()
-							* packet.getItemType().getSellingPrice() + " GBP.");
-					balance.addValue(packet, order);
-					amendOrderQuantity(packet, order);
-					stock.remove(packet);
-
-				} else {
-					System.out.println("You've just sold "
-							+ packet.getQuantity() + " "
-							+ packet.getPacketName() + " for "
-							+ packet.getQuantity()
-							* packet.getItemType().getSellingPrice() + " GBP.");
-					balance.addValue(packet, order);
-					stock.remove(packet);
-
-				}
-			}
-
-		}
-	}
-
 	public void buyPackets(Account balance, int day, String buyWhat,
 			int quantity) {
 
@@ -71,7 +27,7 @@ public class Warehouse {
 
 	}
 
-	private void amendOrderQuantity(Packet packet, Customer dailyOrder) {
+	public void amendOrderQuantity(Packet packet, Customer dailyOrder) {
 		Integer amendedOrderQuantity = dailyOrder.getPurchaseQuantity()
 				- packet.getQuantity();
 		dailyOrder.setPurchaseQuantity(amendedOrderQuantity);
