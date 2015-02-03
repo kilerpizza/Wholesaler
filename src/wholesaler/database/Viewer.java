@@ -49,13 +49,7 @@ public class Viewer {
 
 	}
 
-	public String getString() {
-		@SuppressWarnings("resource")
-		Scanner userInput = new Scanner(System.in);
-		String choice = userInput.next();
-		return choice;
-
-	}
+	
 
 	public void displayAvailableItemList() {
 		System.out
@@ -126,13 +120,7 @@ public class Viewer {
 				+ " GBP per unit.");
 	}
 
-	public Integer getInteger() {
-		@SuppressWarnings("resource")
-		Scanner userInput = new Scanner(System.in);
-		Integer quantity = userInput.nextInt();
-		return quantity;
-
-	}
+	
 
 	public void displayMarketMessage() {
 		System.out.println("Hi. I'd like to buy:");

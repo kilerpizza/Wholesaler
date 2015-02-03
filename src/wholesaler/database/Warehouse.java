@@ -18,6 +18,8 @@ public class Warehouse {
 		return stock;
 	}
 
+	
+
 	public void buyPackets(Account balance, int day, String buyWhat,
 			int quantity) {
 
@@ -36,13 +38,6 @@ public class Warehouse {
 	public void amendPacketQuantity(Packet packet, Integer orderQuantity) {
 		Integer amendedPacketQuantity = packet.getQuantity() - orderQuantity;
 		packet.setQuantity(amendedPacketQuantity);
-	}
-
-	public void renderStockContentByItemType() {
-		for (ItemType itemType : getEveryTypeOfItemTypesInStock()) {
-			System.out.println(itemType.getName() + ": "
-					+ getTotalQuantityByItemType(itemType));
-		}
 	}
 
 	public void addItem(ItemType itemType, Integer quantity, Integer purchase) {

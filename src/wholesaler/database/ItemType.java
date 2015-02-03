@@ -61,7 +61,7 @@ public class ItemType {
 
 	@Override
 	public String toString() {
-		return name + ", expiry= " + expiry + " days.";
+		return name;
 	}
 
 }

@@ -38,7 +38,7 @@ public class Packet {
 
 	@Override
 	public String toString() {
-		return "goods= " + itemType + " , quantity = " + quantity
+		return "" + itemType + " , quantity = " + quantity
 				+ ", purchased on = " + purchase + ". ";
 	}
 
